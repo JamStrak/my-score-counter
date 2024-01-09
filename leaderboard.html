@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>排行榜</title>
+    <style>
+        /* 添加您的CSS样式 */
+        .leaderboard-container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .leaderboard-entry {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard-container">
+        <h1>排行榜</h1>
+        <div id="leaderboard"></div>
+    </div>
+    <script src="leaderboard.js"></script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const leaderboardElement = document.getElementById('leaderboard');
+    const savedScores = JSON.parse(localStorage.getItem('scores')) || [];
+    const totalScores = calculateTotalScores(savedScores);
+
+    Object.keys(totalScores).sort((a, b) => totalScores[b] - totalScores[a]).forEach(name => {
+        const entry = document.createElement('div');
+        entry.classList.add('leaderboard-entry');
+        entry.textContent = `${name}: ${totalScores[name]}`;
+        leaderboardElement.appendChild(entry);
+    });
+});
+
+function calculateTotalScores(savedScores) {
+    let totalScores = {};
+
+    savedScores.forEach(game => {
+        game.forEach(player => {
+            if (!totalScores[player.name]) {
+                totalScores[player.name] = 0;
+            }
+            totalScores[player.name] += player.score;
+        });
+    });
+
+    return totalScores;
+}
+
+</script>
+</body>
+</html>
+
