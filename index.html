@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-        <title>Scorekeeper</title>
+    <title>Scorekeeper</title>
     <style>
         .king {
         font-size: 4.5em; /* 放大字体 */
@@ -109,7 +109,7 @@
         <div class="player" id="player1" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="Player 1" />
+        <input type="text" class="player-name" value="玩家1" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -125,7 +125,7 @@
 <div class="player" id="player2" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="Player 2" />
+        <input type="text" class="player-name" value="玩家2" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -141,7 +141,7 @@
         <div class="player" id="player3" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="Player 3" />
+        <input type="text" class="player-name" value="玩家3" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -157,7 +157,7 @@
         <div class="player" id="player4" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="Player 4" />
+        <input type="text" class="player-name" value="玩家4" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -282,21 +282,9 @@ function updateAllRanks() {
             rankDisplay.textContent = 'Rank: #' + (index + 1);
             rankDisplay.classList.remove('king'); // 移除 king 类
         }
-        const preventDoubleClickZoom = (event) => {
-            if (event.detail > 1) {
-                event.preventDefault();
-            }
-        };
-
-        // 为所有按钮添加防止双击放大的事件监听器
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', preventDoubleClickZoom);
-        });
     });
 }
 
     </script>
-   
-
 </body>
 </html>
