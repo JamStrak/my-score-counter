@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <button id="upload-scores">上传战绩</button>
+    <a href="leaderboard.html" target="_blank">查看排行榜</a>
+
     <meta charset="UTF-8">
+    
+
     <title>Scorekeeper</title>
     <style>
         .king {
-        font-size: 4.5em; /* 放大字体 */
-        animation: rainbowAnimation 0.6s infinite; /* 添加动画 */
+        font-size: 4em; /* 放大字体 */
+        animation: rainbowAnimation 0.8s infinite; /* 添加动画 */
 }
 
         @keyframes rainbowAnimation {
@@ -109,7 +114,7 @@
         <div class="player" id="player1" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="玩家1" />
+        <input type="text" class="player-name" value="飞翔母球大师-赵公子" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -125,7 +130,7 @@
 <div class="player" id="player2" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="玩家2" />
+        <input type="text" class="player-name" value="情意绵绵老年杆-陈员外" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -141,7 +146,7 @@
         <div class="player" id="player3" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="玩家3" />
+        <input type="text" class="player-name" value="大力奇迹姆普弟-王总" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -157,7 +162,7 @@
         <div class="player" id="player4" data-team="">
     <div class="player-header">
         <span class="player-rank">Rank: #</span>
-        <input type="text" class="player-name" value="玩家4" />
+        <input type="text" class="player-name" value="出杆不瞄火箭哥-黄总" />
         <span class="player-high-score">High Score: 0</span>
     </div>
             <div class="score-container">
@@ -171,6 +176,23 @@
         </div>
     </div>
     <script>
+        document.getElementById('upload-scores').addEventListener('click', () => {
+    const playersData = Array.from(document.querySelectorAll('.player')).map(player => {
+        return {
+            name: player.querySelector('.player-name').value,
+            score: parseInt(player.querySelector('.score').textContent)
+        };
+    });
+
+    saveScores(playersData);
+});
+
+function saveScores(playersData) {
+    let savedScores = JSON.parse(localStorage.getItem('scores')) || [];
+    savedScores.push(playersData);
+    localStorage.setItem('scores', JSON.stringify(savedScores));
+}
+
         document.addEventListener('DOMContentLoaded', () => {
         const players = document.querySelectorAll('.player');
 
