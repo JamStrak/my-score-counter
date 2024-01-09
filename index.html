@@ -171,31 +171,47 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-    const players = document.querySelectorAll('.player');
+        document.addEventListener('DOMContentLoaded', () => {
+        const players = document.querySelectorAll('.player');
 
-    players.forEach(player => {
-        const increaseButton = player.querySelector('.increase');
-        const decreaseButton = player.querySelector('.decrease');
-        const resetButton = player.querySelector('.reset-score');
-        const scoreDisplay = player.querySelector('.score');
-        const teamButtons = player.querySelectorAll('.team-button');
+        const handleScoreChange = (player, change) => {
+            updateScore(player, change);
+            updateHighScore(player);
+            updateAllRanks();
+        };
 
-        increaseButton.addEventListener('click', () => {
-            updateScore(player, 1);
-        });
+        players.forEach(player => {
+            const increaseButton = player.querySelector('.increase');
+            const decreaseButton = player.querySelector('.decrease');
+            const resetButton = player.querySelector('.reset-score');
+            const teamButtons = player.querySelectorAll('.team-button');
 
-        decreaseButton.addEventListener('click', () => {
-            updateScore(player, -1);
-        });
+            increaseButton.addEventListener('click', () => handleScoreChange(player, 1));
+            decreaseButton.addEventListener('click', () => handleScoreChange(player, -1));
+            resetButton.addEventListener('click', () => {
+                player.querySelector('.score').textContent = '0';
+                updateAllRanks();
+            });
 
-        resetButton.addEventListener('click', () => {
-            scoreDisplay.textContent = '0';
-        });
+            // 处理触摸事件
+            const handleTouchEnd = (change) => (e) => {
+                e.preventDefault();
+                handleScoreChange(player, change);
+            };
 
-        teamButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                toggleTeam(player, button);
+            increaseButton.addEventListener('touchend', handleTouchEnd(1));
+            decreaseButton.addEventListener('touchend', handleTouchEnd(-1));
+            resetButton.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                player.querySelector('.score').textContent = '0';
+                updateAllRanks();
+            });
+
+            teamButtons.forEach(button => {
+                button.addEventListener('click', () => toggleTeam(player, button));
+                button.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    toggleTeam(player, button);
             });
         });
     });
