@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Scorekeeper</title>
+    <style>
+        .king {
+        font-size: 4.5em; /* 放大字体 */
+        animation: rainbowAnimation 0.3s infinite; /* 添加动画 */
+}
+
+        @keyframes rainbowAnimation {
+            0% {color: red;}
+            20% {color: blue;}
+            40% {color: yellow;}
+            60% {color: green;}
+            80% {color: purple;}
+            100% {color: orange;}
+
+
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #scoreboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 100%;
+        }
+        .player {
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin: 10px;
+            background-color: #f3f3f3;
+            width: 90%;
+            text-align: center;
+        }
+        .player-name {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        .score-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .score {
+            font-size: 6em;
+            margin: 20px;
+        }
+        .change-score, .team-button {
+            padding: 20px 40px;
+            font-size: 2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .increase {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .decrease {
+            background-color: #f44336;
+            color: white;
+        }
+        .team-button {
+            background-color: grey;
+            color: white;
+            margin: 0 10px;
+        }
+        .team-button.selected {
+            background-color: orange; /* A team button */
+            color: white;
+        }
+        .team-button.selected.team-b {
+            background-color: blue; /* B team button */
+            color: white;
+        }
+        .increase:hover, .decrease:hover, .team-button:hover {
+            opacity: 0.8;
+        }
+        .reset-score {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1.5em;
+        }
+        .reset-score:hover {
+            background-color: #d73833;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">
+        <!-- Player 1 -->
+        <div class="player" id="player1" data-team="">
+    <div class="player-header">
+        <span class="player-rank">Rank: #</span>
+        <input type="text" class="player-name" value="Player 1" />
+        <span class="player-high-score">High Score: 0</span>
+    </div>
+            <div class="score-container">
+                <button class="team-button" data-team="A">A team</button>
+                <button class="change-score decrease">-</button>
+                <div class="score">0</div>
+                <button class="change-score increase">+</button>
+                <button class="team-button" data-team="B">B team</button>
+            </div>
+            <button class="reset-score">Reset</button>
+        </div>
+        <!-- Player 2 -->
+<div class="player" id="player2" data-team="">
+    <div class="player-header">
+        <span class="player-rank">Rank: #</span>
+        <input type="text" class="player-name" value="Player 2" />
+        <span class="player-high-score">High Score: 0</span>
+    </div>
+            <div class="score-container">
+                <button class="team-button" data-team="A">A team</button>
+                <button class="change-score decrease">-</button>
+                <div class="score">0</div>
+                <button class="change-score increase">+</button>
+                <button class="team-button" data-team="B">B team</button>
+            </div>
+            <button class="reset-score">Reset</button>
+        </div>
+        <!-- Player 3 -->
+        <div class="player" id="player3" data-team="">
+    <div class="player-header">
+        <span class="player-rank">Rank: #</span>
+        <input type="text" class="player-name" value="Player 3" />
+        <span class="player-high-score">High Score: 0</span>
+    </div>
+            <div class="score-container">
+                <button class="team-button" data-team="A">A team</button>
+                <button class="change-score decrease">-</button>
+                <div class="score">0</div>
+                <button class="change-score increase">+</button>
+                <button class="team-button" data-team="B">B team</button>
+            </div>
+            <button class="reset-score">Reset</button>
+        </div>
+        <!-- Player 4 -->
+        <div class="player" id="player4" data-team="">
+    <div class="player-header">
+        <span class="player-rank">Rank: #</span>
+        <input type="text" class="player-name" value="Player 4" />
+        <span class="player-high-score">High Score: 0</span>
+    </div>
+            <div class="score-container">
+                <button class="team-button" data-team="A">A team</button>
+                <button class="change-score decrease">-</button>
+                <div class="score">0</div>
+                <button class="change-score increase">+</button>
+                <button class="team-button" data-team="B">B team</button>
+            </div>
+            <button class="reset-score">Reset</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+    const players = document.querySelectorAll('.player');
+
+    players.forEach(player => {
+        const increaseButton = player.querySelector('.increase');
+        const decreaseButton = player.querySelector('.decrease');
+        const resetButton = player.querySelector('.reset-score');
+        const scoreDisplay = player.querySelector('.score');
+        const teamButtons = player.querySelectorAll('.team-button');
+
+        increaseButton.addEventListener('click', () => {
+            updateScore(player, 1);
+        });
+
+        decreaseButton.addEventListener('click', () => {
+            updateScore(player, -1);
+        });
+
+        resetButton.addEventListener('click', () => {
+            scoreDisplay.textContent = '0';
+        });
+
+        teamButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                toggleTeam(player, button);
+            });
+        });
+    });
+
+    function updateScore(player, change) {
+       const selectedTeam = player.getAttribute('data-team');
+    let teamMembers = [player];
+
+    if (selectedTeam) {
+        teamMembers = document.querySelectorAll(`.player[data-team="${selectedTeam}"]`);
+        const oppositeTeam = selectedTeam === 'A' ? 'B' : 'A';
+        const oppositeTeamMembers = document.querySelectorAll(`.player[data-team="${oppositeTeam}"]`);
+
+        updateTeamScore(teamMembers, change);
+        updateTeamScore(oppositeTeamMembers, -change);
+    } else {
+        updateIndividualScore(player, change);
+    }
+
+    // 确保在每次分数更新后都调用这些函数
+    updateHighScore(player);
+    updateAllRanks();
+        
+    }
+
+    function updateTeamScore(members, change) {
+        members.forEach(member => {
+        const scoreDisplay = member.querySelector('.score');
+        let score = parseInt(scoreDisplay.textContent);
+        score += change;
+        scoreDisplay.textContent = score;
+
+        // 现在也在组队模式下更新最高分
+        updateHighScore(member);
+        });
+    }
+
+    function updateIndividualScore(player, change) {
+        const scoreDisplay = player.querySelector('.score');
+        let score = parseInt(scoreDisplay.textContent);
+        score += change;
+        scoreDisplay.textContent = score;
+    }
+
+    function toggleTeam(player, button) {
+        const team = button.getAttribute('data-team');
+        const isSelected = button.classList.contains('selected');
+
+        player.querySelectorAll('.team-button').forEach(b => b.classList.remove('selected'));
+
+        if (isSelected) {
+            player.setAttribute('data-team', '');
+        } else {
+            button.classList.add('selected');
+            player.setAttribute('data-team', team);
+        }
+    }
+});
+function updateHighScore(player) {
+    const scoreDisplay = player.querySelector('.score');
+    const highScoreDisplay = player.querySelector('.player-high-score');
+    let score = parseInt(scoreDisplay.textContent);
+    let highScore = parseInt(highScoreDisplay.textContent.split(': ')[1]);
+
+    if (score > highScore) {
+        highScoreDisplay.textContent = 'High Score: ' + score;
+    }
+}
+
+function updateAllRanks() {
+    const players = Array.from(document.querySelectorAll('.player'));
+    players.sort((a, b) => {
+        const scoreA = parseInt(a.querySelector('.score').textContent);
+        const scoreB = parseInt(b.querySelector('.score').textContent);
+        return scoreB - scoreA;
+    });
+
+    players.forEach((player, index) => {
+        const rankDisplay = player.querySelector('.player-rank');
+        if (index === 0) { // 第一名
+            rankDisplay.textContent = 'King';
+            rankDisplay.classList.add('king'); // 添加 king 类
+        } else { // 其他排名
+            rankDisplay.textContent = 'Rank: #' + (index + 1);
+            rankDisplay.classList.remove('king'); // 移除 king 类
+        }
+        const preventDoubleClickZoom = (event) => {
+            if (event.detail > 1) {
+                event.preventDefault();
+            }
+        };
+
+        // 为所有按钮添加防止双击放大的事件监听器
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', preventDoubleClickZoom);
+        });
+    });
+}
+
+    </script>
+   
+
+</body>
+</html>
