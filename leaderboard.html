@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .leaderboard-container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .leaderboard {
+            list-style-type: none;
+            padding: 0;
+        }
+        .leaderboard li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .leaderboard li:last-child {
+            border-bottom: none;
+        }
+        .reset-button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #resetScoresButton {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #resetScoresButton:hover {
+            background-color: #e04343;
+        }
+    </style>
+</head>
+<body>
+    <div class="leaderboard-container">
+        <h1>Leaderboard</h1>
+        <ul class="leaderboard">
+            <!-- Leaderboard entries will be dynamically inserted here -->
+        </ul>
+        <div class="reset-button-container">
+            <button id="resetScoresButton">Reset Scores</button>
+        </div>
+    </div>
+</body>
+</html>
