@@ -32,10 +32,27 @@ function updateLeaderboardDisplay(savedScores) {
         entry.classList.add('leaderboard-entry');
         entry.textContent = `${name}: ${totalScores[name]}`;
         leaderboardElement.appendChild(entry);
+
+        // Add animation for entry appearance
+        entry.style.opacity = 0;
+        entry.style.transition = 'opacity 0.5s';
+        setTimeout(() => {
+            entry.style.opacity = 1;
+        }, 100);
     });
 }
 
 function resetScores() {
-    localStorage.setItem('scores', JSON.stringify([]));
-    updateLeaderboardDisplay([]);
+    try {
+        localStorage.setItem('scores', JSON.stringify([]));
+        updateLeaderboardDisplay([]);
+        // Add visual feedback for reset action
+        const resetButton = document.getElementById('reset-button');
+        resetButton.classList.add('button-clicked');
+        setTimeout(() => {
+            resetButton.classList.remove('button-clicked');
+        }, 200);
+    } catch (error) {
+        console.error('Error resetting scores:', error);
+    }
 }
