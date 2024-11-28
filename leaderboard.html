@@ -53,14 +53,21 @@
     </style>
 </head>
 <body>
-    <div class="leaderboard-container">
+    <header>
         <h1>Leaderboard</h1>
-        <ul class="leaderboard">
-            <!-- Leaderboard entries will be dynamically inserted here -->
-        </ul>
-        <div class="reset-button-container">
-            <button id="resetScoresButton">Reset Scores</button>
-        </div>
-    </div>
+    </header>
+    <main>
+        <section class="leaderboard-container" aria-label="Leaderboard Section">
+            <ul class="leaderboard" role="list">
+                <!-- Leaderboard entries will be dynamically inserted here -->
+            </ul>
+            <div class="reset-button-container">
+                <button id="resetScoresButton" role="button" tabindex="0">Reset Scores</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <!-- Footer content can be added here if needed -->
+    </footer>
 </body>
 </html>
